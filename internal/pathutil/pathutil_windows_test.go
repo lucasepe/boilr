@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/lucasepe/dry/internal/pathutil"
+	"github.com/lucasepe/boilr/internal/pathutil"
 	"github.com/stretchr/testify/require"
 )
 
