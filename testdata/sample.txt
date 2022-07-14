@@ -1,0 +1,7 @@
+Greetings
+
+I will be out of the office from ${START_DATE} until ${RETURN_DATE}. 
+If you need immediate assistance while I’m away, please email ${EMAIL}.
+
+Best,
+${NAME^^} ${SURNAME^}

@@ -1,0 +1,71 @@
+# Run locally with: goreleaser --rm-dist --snapshot --skip-publish
+project_name: boilr
+before:
+  hooks:
+    - go mod tidy
+    - go mod download
+builds:
+- env:
+    - CGO_ENABLED=0
+  goos:
+    - windows
+    - linux
+    - darwin
+  goarch:
+    - arm
+    - arm64
+    - amd64
+  goarm:
+    - 7
+  ldflags:
+    - -s -w -X "main.Version={{.Version}}" -X "main.Build={{.ShortCommit}}"
+    - -a -extldflags "-static"
+
+universal_binaries:
+- replace: false
+
+checksum:
+  name_template: 'checksums.txt'
+
+archives:
+  - name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+nfpms:
+  -
+    package_name: boilr
+    vendor: Luca Sepe
+    homepage: https://github.com/lucasepe/boilr/
+    description: Text templates using ${var} expansion syntax.
+    license: Apache License 2.0
+    maintainer: Luca Sepe
+    formats:
+      - deb
+      - rpm
+
+announce:
+  twitter:
+    enabled: false
+    message_template: 'Boilr {{ .Tag }} is out! Check it out: https://github.com/lucasepe/boilr/releases/tag/{{ .Tag }}'
+
+  discord:
+    enabled: false
+    message_template: 'Boilr {{ .Tag }} is out! Check it out: https://github.com/lucasepe/boilr/releases/tag/{{ .Tag }}'
+  
+  linkedin:
+    enabled: false
+    message_template: 'Boilr {{ .Tag }} is out! Check it out: https://github.com/lucasepe/boilr/releases/tag/{{ .Tag }}'
+  
+  reddit:
+    enabled: false
+    # Application ID for Reddit Application
+    application_id: ""
+    # Username for your Reddit account
+    username: ""
+    # URL template to use while publishing.
+    # Defaults to `{{ .ReleaseURL }}`
+    url_template: 'https://github.com/lucasepe/boilr/releases/tag/{{ .Tag }}'
+    # Title template to use while publishing.
+    # Defaults to `{{ .ProjectName }} {{ .Tag }} is out!`
+    title_template: 'Boilr {{ .Tag }} is out! Check it out: https://github.com/lucasepe/boilr/releases/tag/{{ .Tag }}'
